@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const GameSettingPage = () => {
@@ -90,6 +91,7 @@ const GameSettingPage = () => {
           <SOption value='random'>랜덤</SOption>
         </SSelect>
       </SettingWrap>
+      <SLink to='/game'>게임하러가기</SLink>
     </SettingContainer>
   )
 }
@@ -120,3 +122,5 @@ const SSelect = styled.select`
 `;
 
 const SOption = styled.option``;
+
+const SLink = styled(Link)``;
