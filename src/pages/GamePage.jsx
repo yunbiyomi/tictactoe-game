@@ -39,32 +39,54 @@ const GamePage = () => {
 
   return (
     <GamepageContainer>
-      <SP>승리조건 {winCondition}</SP>
-      <SP>player1Time {player1Time}</SP>
-      <SP>player2Time {player2Time}</SP>
-      <SP>player1 마크 {player1Mark}</SP>
-      <SP>player2 마크 {player2Mark}</SP>
-      <SP>player1 마크색 {player1MarkColor}</SP>
-      <SP>player2 마크색 {player2MarkColor}</SP>
-      <SP>player1 남은 무르기 횟수 : {player1BackCount}</SP>
-      <SP>player2 남은 무르기 횟수 : {player2BackCount}</SP>
-      {
-        currentPlayer ?
-          <STitle>현재 {currentPlayer}</STitle> :
-          <STitle>게임이 끝났습니다.</STitle>
-      }
-      <GameBoard
-        currentPlayer={currentPlayer}
-        setCurrentPlayer={setCurrentPlayer}
-        player1Time={player1Time}
-        setPlayer1Time={setPlayer1Time}
-        player2Time={player2Time}
-        setPlayer2Time={setPlayer2Time}
-        isBack={isBack}
-        setIsBack={setIsBack}
-      />
-      <SButton onClick={handleBackBtn}>무르기</SButton>
-      <SLink to='/'>홈으로 돌아가기</SLink>
+      <LeftBox>
+        {
+          currentPlayer ?
+            <STitle>🕹️  : {currentPlayer}</STitle> :
+            <STitle>게임이 끝났습니다.</STitle>
+        }
+        <GameBoard
+          currentPlayer={currentPlayer}
+          setCurrentPlayer={setCurrentPlayer}
+          player1Time={player1Time}
+          setPlayer1Time={setPlayer1Time}
+          player2Time={player2Time}
+          setPlayer2Time={setPlayer2Time}
+          isBack={isBack}
+          setIsBack={setIsBack}
+        />
+        <SWinCondition>
+          <Strong>{winCondition}개</Strong>의 연속된 마크가 놓여지면 승리합니다.
+        </SWinCondition>
+      </LeftBox>
+      <RightBox>
+        <PlayerBox>
+          <PlayerName>
+            👤 PLAYER 1 <SMark color={player1MarkColor}>({player1Mark})</SMark>
+          </PlayerName>
+          <SCountP>
+            남은 시간 <Strong>{player1Time}초</Strong>
+          </SCountP>
+          <SCountP>
+            남은 무르기 횟수 : <Strong>{player1BackCount}회</Strong>
+          </SCountP>
+        </PlayerBox>
+        <PlayerBox>
+          <PlayerName>
+            👤 PLAYER 2 <SMark color={player2MarkColor}>({player2Mark})</SMark>
+          </PlayerName>
+          <SCountP>
+            남은 시간 <Strong>{player2Time}초</Strong>
+          </SCountP>
+          <SCountP>
+            남은 무르기 횟수 : <Strong>{player2BackCount}회</Strong>
+          </SCountP>
+        </PlayerBox>
+        <BtnWrap>
+          <SButton onClick={handleBackBtn}>무르기</SButton>
+          <HomeBtn to='/'>홈으로 가기</HomeBtn>
+        </BtnWrap>
+      </RightBox>
     </GamepageContainer>
   )
 }
@@ -73,18 +95,102 @@ export default GamePage
 
 const GamepageContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+`;
+
+const LeftBox = styled.div`
+  margin-right: 100px;
+`;
+
+const RightBox = styled.div`
+  display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
 `;
 
+const PlayerBox = styled.section`
+  width: 400px;
+  padding: 20px 30px;
+  margin-bottom: 30px;
+  background-color: var(--play-box);
+  border-radius: 20px;
+`;
+
 const STitle = styled.div`
-  font-size: 30px;
+  font-size: 40px;
+  font-weight: bold;
 `;
 
-const SLink = styled(Link)`
+const SWinCondition = styled.p`
+  font-size: 23px;
+  text-align: center;
 `;
 
-const SP = styled.p`
+const Strong = styled.strong`
+`;
+
+const PlayerName = styled.p`
+  margin-bottom: 15px;
+  font-size: 35px;
+  font-weight: bold;
+`;
+
+const SMark = styled.strong`
+  color: ${props => props.color};
+`;
+
+const SCountP = styled.p`
+  font-size: 20px;
+  margin-bottom: 10px;
+`;
+
+const BtnWrap = styled.div`
+  width: 100%;
+  margin-top: 130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const SButton = styled.button`
+  width: 180px;
+  height: 70px;
+  border-radius: 10px;
+  background-color: var(--light-green);
+  font-size: 23px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: transparent;
+    border: 3px solid var(--font-color);
+  }
+`;
+
+const SLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  margin: 0;
+`;
+
+const HomeBtn = styled(SLink)`
+  width: 180px;
+  height: 70px;
+  display: inline-block;
+  padding: 20px 20px;
+  border-radius: 10px;
+  background-color: var(--light-green);
+  text-align: center;
+  font-size: 23px;
+  font-weight: bold;
+  box-sizing: border-box;
+  border: 3px solid transparent;
+
+  &:hover {
+    background-color: transparent;
+    border: 3px solid var(--font-color);
+  }
 `;

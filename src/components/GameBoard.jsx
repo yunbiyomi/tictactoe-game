@@ -72,15 +72,17 @@ const GameBoard = ({
 
   // 각 플레이어 별 시간 계산 함수
   useEffect(() => {
-    const timer = setInterval(() => {
-      if (currentPlayer === 'player1') {
-        setPlayer1Time(prevTime => prevTime - 1);
-      } else if (currentPlayer === 'player2') {
-        setPlayer2Time(prevTime => prevTime - 1);
-      }
-    }, 1000);
+    if(!isEnd) {
+      const timer = setInterval(() => {
+        if (currentPlayer === 'player1') {
+          setPlayer1Time(prevTime => prevTime - 1);
+        } else if (currentPlayer === 'player2') {
+          setPlayer2Time(prevTime => prevTime - 1);
+        }
+      }, 1000);
 
-    return () => clearInterval(timer);
+      return () => clearInterval(timer);
+    }
   }, [currentPlayer]);
 
   // 15초 경과시 다른 플레이어로 넘어가는 함수
@@ -213,7 +215,8 @@ export default GameBoard
 const GameBoardContainer = styled.section`
   display: flex;
   flex-direction: column;
-  border: 5px solid black;
+  margin: 30px auto;
+  border: 5px solid var(--font-color);
 `;
 
 const GameBoardRow = styled.div`

@@ -20,14 +20,16 @@ const Square = ({ value, onClick }) => {
 export default Square
 
 const SquareBox = styled.div`
-  width: 100px;
-  height: 100px;
-  border: 5px solid black;
-  color: ${props => props.color};
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  width: 150px;
+  height: 150px;
+  border: 5px solid var(--font-color);
+  background-color: var(--game-board-color);
+  color: ${props => props.color};
+  box-sizing: border-box;
+  font-size: 50px;
+  font-weight: bold;
   cursor: pointer;
 `;
