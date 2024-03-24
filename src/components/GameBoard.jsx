@@ -2,8 +2,69 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Square from './Square'
 
-const GameBoard = ({ size, currentPlayer, player1Mark, player2Mark, setCurrentPlayer, winCondition }) => {
-  const [board, setBoard] = useState(Array(size).fill(Array(size).fill('')));
+const GameBoard = ({ size, currentPlayer, player1Mark, player2Mark, setCurrentPlayer, winCondition, player1Time, setPlayer1Time, player2Time, setPlayer2Time }) => {
+  const initialBoard = Array(size).fill(null).map(() => Array(size).fill(''));
+  const [board, setBoard] = useState(initialBoard);
+  const [isEnd, setIsEnd] = useState(false);
+  const [isTimeOut, setIsTimeOut] = useState(false);
+
+  // 각 플레이어 별 시간 계산 함수
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (currentPlayer === 'player1') {
+        setPlayer1Time(prevTime => prevTime - 1);
+      } else if (currentPlayer === 'player2') {
+        setPlayer2Time(prevTime => prevTime - 1);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [currentPlayer]);
+
+  // 15초 경과시 다른 플레이어로 넘어가는 함수
+  useEffect(() => {
+    if (currentPlayer === 'player1' && player1Time === 0) {
+      handleTimeOut('player1');
+    } else if (currentPlayer === 'player2' && player2Time === 0) {
+      handleTimeOut('player2');
+    }
+    setIsTimeOut(false);
+  }, [player1Time, player2Time]);
+
+  // 15초 경과시 랜덤으로 마크 생성해주는 함수
+  const handleTimeOut = (player) => {
+    if(isTimeOut) return;
+
+    const emptySquares = [];
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
+        if (board[i][j] === '') {
+          emptySquares.push({ row: i, col: j });
+        }
+      }
+    }
+
+    if (emptySquares.length > 0) {
+      const randomIndex = Math.floor(Math.random() * emptySquares.length);
+      const { row, col } = emptySquares[randomIndex];
+      const newBoard = [...board];
+      newBoard[row][col] = player === 'player1' ? player1Mark : player2Mark;
+      setBoard(newBoard);
+      setIsTimeOut(true);
+
+      // 승리 조건을 갖추었는지 확인
+      if (checkWin(row, col)) {
+        setTimeout(() => {
+          alert(`${currentPlayer}가 승리하였습니다!`);
+        }, 0);
+        setIsEnd(true);
+        setCurrentPlayer(null);
+      } else {
+        setCurrentPlayer(player === 'player1' ? 'player2' : 'player1');
+        player === 'player1' ? setPlayer1Time(15) : setPlayer2Time(15);
+      }
+    }
+  };
 
   // 승리 조건을 갖추었는지 검사하는 함수
   const checkWin = (row, col) => {
@@ -49,7 +110,7 @@ const GameBoard = ({ size, currentPlayer, player1Mark, player2Mark, setCurrentPl
   }
 
   useEffect(() => {
-    if(checkDraw()) {
+    if(!isEnd && checkDraw()) {
       setTimeout(() => {
         alert(`무승부입니다!`);
       }, 0);
@@ -72,12 +133,14 @@ const GameBoard = ({ size, currentPlayer, player1Mark, player2Mark, setCurrentPl
         return rowArr;
       });
       setBoard(newBoard);
+      currentPlayer === 'player1' ? setPlayer1Time(15) : setPlayer2Time(15);
 
       // 승리 조건을 갖추었는지 확인
       if (checkWin(row, col)) {
         setTimeout(() => {
           alert(`${currentPlayer}가 승리하였습니다!`);
         }, 0);
+        setIsEnd(true);
         setCurrentPlayer(null);
       } else {
         setCurrentPlayer(currentPlayer === 'player1' ? 'player2' : 'player1');

@@ -14,6 +14,8 @@ const GamePage = () => {
   const startPlayer = useSelector(state => state.gameSettings.startPlayer);
 
   const [currentPlayer, setCurrentPlayer] = useState(null);
+  const [player1Time, setPlayer1Time] = useState(15);
+  const [player2Time, setPlayer2Time] = useState(15);
 
   // 시작 플레이어 선택에 따라 먼저 시작할 플레이어 정해주는 함수
   useEffect(() => {
@@ -27,19 +29,32 @@ const GamePage = () => {
 
   return (
     <div>
-      {gameBoardSize}
+      {`player1Time${player1Time}`}
+      {`player2Time${player2Time}`}
+      {/* {gameBoardSize}
       {winCondition}
       {player1Mark}
       {player2Mark}
       {player1MarkColor}
-      {player2MarkColor}
+      {player2MarkColor} */}
       {startPlayer}
       {
         currentPlayer ?
           <STitle>현재 {currentPlayer}</STitle> :
           <STitle>게임이 끝났습니다.</STitle>
       }
-      <GameBoard size={gameBoardSize} currentPlayer={currentPlayer} player1Mark={player1Mark} player2Mark={player2Mark} setCurrentPlayer={setCurrentPlayer} winCondition={winCondition}/>
+      <GameBoard
+        size={gameBoardSize}
+        currentPlayer={currentPlayer}
+        player1Mark={player1Mark}
+        player2Mark={player2Mark}
+        setCurrentPlayer={setCurrentPlayer}
+        winCondition={winCondition}
+        player1Time={player1Time}
+        setPlayer1Time={setPlayer1Time}
+        player2Time={player2Time}
+        setPlayer2Time={setPlayer2Time}
+      />
       <SLink to='/'>홈으로 돌아가기</SLink>
     </div>
   )

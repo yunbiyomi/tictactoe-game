@@ -7,6 +7,7 @@ import { resetGameSettings, setGameBoardSize, setPlayer1Mark, setPlayer1MarkColo
 const GameSettingPage = () => {
   const dispatch = useDispatch();
   const gameBoardSize = useSelector(state => state.gameSettings.gameBoardSize); // 게임판 크기
+  const winCondition = useSelector(state => state.gameSettings.winCondition); // 승리 조건
   const player1Mark = useSelector(state => state.gameSettings.player1Mark); // 플레이어1 마크 모양
   const player2Mark = useSelector(state => state.gameSettings.player2Mark); // 플레이어2 마크 모양
   const player1MarkColor = useSelector(state => state.gameSettings.player1MarkColor); // 플레이어 1 마크 색상
@@ -40,15 +41,21 @@ const GameSettingPage = () => {
         </BtnWrap>
       </SettingWrap>
       <SettingWrap>
-        <SLabel htmlFor='widCondition'>승리 조건</SLabel>
-        {Array.from({ length: gameBoardSize - 2 }, (_, index) => index + 3).map(condition => (
-          <SButton 
-            key={condition} 
-            onClick={() => handleWinCondition(condition)}
-          >
-            {condition}
-          </SButton>
-        ))}
+        <SLabel htmlFor='winCondition'>승리 조건</SLabel>
+        <SSelect
+          id='winCondition'
+          value={winCondition}
+          onChange={(e)=>dispatch(setWinCondition(e.target.value))}
+        >
+          {Array.from({ length: gameBoardSize - 2 }, (_, index) => index + 3).map(condition => (
+            <SOption 
+              key={condition} 
+              value={condition}
+            >
+              {condition}
+            </SOption>
+          ))}
+        </SSelect>
       </SettingWrap>
       <SettingWrap>
         <SLabel htmlFor='player1Mark'>플레이어 1 마크</SLabel>
