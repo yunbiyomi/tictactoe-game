@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import gameSettingReducer from './gameSettingReducer'
-import boardReducer from './boardReducer'
+import gameSettingReducer from './gameSetting/gameSettingReducer'
+import boardReducer from './board/boardReducer'
 
 const rootReducer = combineReducers({
   gameSettings: gameSettingReducer,
