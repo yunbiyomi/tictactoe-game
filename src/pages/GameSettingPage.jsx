@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { setGameBoardSize, setPlayer1Mark, setPlayer1MarkColor, setPlayer2Mark, setPlayer2MarkColor, setStartPlayer, setWinCondition } from '../redux/actions';
+import { resetGameSettings, setGameBoardSize, setPlayer1Mark, setPlayer1MarkColor, setPlayer2Mark, setPlayer2MarkColor, setStartPlayer, setWinCondition } from '../redux/actions';
 
 const GameSettingPage = () => {
   const dispatch = useDispatch();
@@ -22,6 +22,11 @@ const GameSettingPage = () => {
   const handleWinCondition = (condition) => {
     dispatch(setWinCondition(condition));
   }
+
+  // 게임 설정시 초기 기본값으로 초기화
+  useEffect(() => {
+    dispatch(resetGameSettings());
+  }, []);
 
   return (
     <SettingContainer>

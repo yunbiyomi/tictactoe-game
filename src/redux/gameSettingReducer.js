@@ -1,4 +1,4 @@
-import { SET_GAME_BOARD_SIZE, SET_PLAYER1_MARK, SET_PLAYER1_MARK_COLOR, SET_PLAYER2_MARK, SET_PLAYER2_MARK_COLOR, SET_START_PLAYER, SET_WIN_CONDITION } from "./actions";
+import { RESET_GAME_SETTINGS, SET_GAME_BOARD_SIZE, SET_PLAYER1_MARK, SET_PLAYER1_MARK_COLOR, SET_PLAYER2_MARK, SET_PLAYER2_MARK_COLOR, SET_START_PLAYER, SET_WIN_CONDITION } from "./actions";
 
 const initialState = {
   gameBoardSize: 3,
@@ -12,6 +12,8 @@ const initialState = {
 
 const gameSettingReducer = (state= initialState, action) => {
   switch(action.type) {
+    case RESET_GAME_SETTINGS:
+      return initialState;
     case SET_GAME_BOARD_SIZE:
       return {
         ...state,
