@@ -4,7 +4,7 @@ import Square from './Square'
 import { useDispatch } from 'react-redux';
 import { updateBoardHistory } from '../redux/boardActions'
 
-const GameBoard = ({ size, currentPlayer, player1Mark, player2Mark, setCurrentPlayer, winCondition, player1Time, setPlayer1Time, player2Time, setPlayer2Time }) => {
+const GameBoard = ({ size, currentPlayer, player1Mark, player2Mark, setCurrentPlayer, winCondition, player1Time, setPlayer1Time, player2Time, setPlayer2Time, isBack, setIsBack }) => {
   const initialBoard = Array(size).fill(null).map(() => Array(size).fill(''));
   const [board, setBoard] = useState(initialBoard);
   const [isEnd, setIsEnd] = useState(false);
@@ -160,6 +160,18 @@ const GameBoard = ({ size, currentPlayer, player1Mark, player2Mark, setCurrentPl
       }
     }
   };
+
+  // 무르기 버튼 클릭시 그 전 단계로 돌아가는 함수
+  useEffect(() => {
+    if(isBack) {
+      if (historyBoard.length > 1) {
+        const previousBoard = historyBoard.slice(0, -1); 
+        setBoard(previousBoard[previousBoard.length - 1]);
+        setCurrentPlayer(currentPlayer === 'player1' ? 'player2' : 'player1');
+        setIsBack(false);
+      }
+    }
+  }, [isBack])
 
   // size의 수만큼 칸을 생성해주는 함수
   const renderSquares = () => {
