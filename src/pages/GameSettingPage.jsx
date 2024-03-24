@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { resetGameSettings, setGameBoardSize, setPlayer1Mark, setPlayer1MarkColor, setPlayer2Mark, setPlayer2MarkColor, setStartPlayer, setWinCondition } from '../redux/actions';
+import { resetGameSettings, setGameBoardSize, setPlayer1Mark, setPlayer1MarkColor, setPlayer2Mark, setPlayer2MarkColor, setStartPlayer, setWinCondition } from '../redux/gameSettingActions';
+import { resetBoard } from '../redux/boardActions';
 
 const GameSettingPage = () => {
   const dispatch = useDispatch();
@@ -19,14 +20,10 @@ const GameSettingPage = () => {
     dispatch(setGameBoardSize(size));
   }
 
-  // 승리 조건 설정 함수
-  const handleWinCondition = (condition) => {
-    dispatch(setWinCondition(condition));
-  }
-
   // 게임 설정시 초기 기본값으로 초기화
   useEffect(() => {
     dispatch(resetGameSettings());
+    dispatch(resetBoard());
   }, []);
 
   return (
@@ -106,6 +103,7 @@ const GameSettingPage = () => {
         </SSelect>
       </SettingWrap>
       <SLink to='/game'>게임하러가기</SLink>
+      <SLink to='/'>홈으로 돌아가기</SLink>
     </SettingContainer>
   )
 }
