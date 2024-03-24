@@ -3,8 +3,10 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyles = createGlobalStyle`
   :root {
     --background-color: #EEF0E5;
-    --light-green: #B6C4B6;
+    --light-green: #99BC85;
     --font-color: #163020;
+    --game-board-color: #EEEEEE;
+    --play-box: #D4E7C5;
   }
 
   @font-face {
