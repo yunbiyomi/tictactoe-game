@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Square from './Square'
+import { useDispatch } from 'react-redux';
+import { updateBoardHistory } from '../redux/boardActions'
 
 const GameBoard = ({ size, currentPlayer, player1Mark, player2Mark, setCurrentPlayer, winCondition, player1Time, setPlayer1Time, player2Time, setPlayer2Time }) => {
   const initialBoard = Array(size).fill(null).map(() => Array(size).fill(''));
   const [board, setBoard] = useState(initialBoard);
   const [isEnd, setIsEnd] = useState(false);
   const [isTimeOut, setIsTimeOut] = useState(false);
+  const [historyBoard, setHistoryBoard] = useState([]);
+  const dispatch = useDispatch();
 
   // 각 플레이어 별 시간 계산 함수
   useEffect(() => {
@@ -115,8 +119,17 @@ const GameBoard = ({ size, currentPlayer, player1Mark, player2Mark, setCurrentPl
         alert(`무승부입니다!`);
       }, 0);
       setCurrentPlayer(null);
+      setIsEnd(true);
     }
-  }, [board])
+    
+    // 함수형 업데이트를 사용해 historyBoard 상태가 누락되지 않도록 보장
+    setHistoryBoard(prevHistoryBoard => {
+      const updatedHistoryBoard = [...prevHistoryBoard, board];
+      if(isEnd) 
+        dispatch(updateBoardHistory(updatedHistoryBoard));
+      return updatedHistoryBoard;
+    });
+  }, [board, isEnd])
 
   // 칸 클릭시 플레이어 별 알맞은 마크 표시해주는 함수
   const handleSquareClick = (row, col) => {
