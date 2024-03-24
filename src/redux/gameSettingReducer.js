@@ -40,7 +40,7 @@ const gameSettingReducer = (state= initialState, action) => {
     case SET_PLAYER2_MARK_COLOR:
       return {
         ...state,
-        player1MarkColor: action.payload
+        player2MarkColor: action.payload
       }
     case SET_START_PLAYER:
       return {
