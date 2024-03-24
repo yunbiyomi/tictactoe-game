@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { resetGameSettings, setGameBoardSize, setPlayer1Mark, setPlayer1MarkColor, setPlayer2Mark, setPlayer2MarkColor, setStartPlayer, setWinCondition } from '../redux/gameSettingActions';
-import { resetBoard } from '../redux/boardActions';
+import { resetGameSettings, setGameBoardSize, setPlayer1Mark, setPlayer1MarkColor, setPlayer2Mark, setPlayer2MarkColor, setStartPlayer, setWinCondition } from '../redux/gameSetting/gameSettingActions';
+import { resetBoard } from '../redux/board/boardActions';
 
 const GameSettingPage = () => {
   const dispatch = useDispatch();
