@@ -2,6 +2,9 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
   :root {
+    --background-color: #EEF0E5;
+    --light-green: #B6C4B6;
+    --font-color: #163020;
   }
 
   @font-face {
@@ -22,6 +25,8 @@ const GlobalStyles = createGlobalStyle`
     justify-content: center;
     align-items: center;
     margin: 0;
+    background-color: var(--background-color);
+    color: var(--font-color);
   }
 
   a {
